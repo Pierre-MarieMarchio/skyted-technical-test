@@ -1,25 +1,21 @@
 import ComposeApp
 import Combine
 
-class MovieListViewModelWrapperIos: ObservableObject {
-    let vm: MovieListVM
+class MovieDetailsViewModelWrapperIos: ObservableObject {
+    let vm: MovieDetailsVM
 
-    @Published var movies: [MovieListItemDto] = []
+    @Published var movie: MovieDetailDto? = nil
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
 
-    init(vm: MovieListVM) {
+    init(vm: MovieDetailsVM) {
         self.vm = vm
 
-        vm.movieListState.addObserver { [weak self] moviesKotlin in
+        vm.movieState.addObserver { [weak self] movieKotlin in
             guard let self = self else { return }
 
             DispatchQueue.main.async {
-                if let kotlinArray = moviesKotlin as? [Any] {
-                    self.movies = kotlinArray.compactMap { $0 as? MovieListItemDto }
-                } else {
-                    self.movies = []
-                }
+                self.movie = movieKotlin as? MovieDetailDto
             }
         }
 
@@ -46,12 +42,12 @@ class MovieListViewModelWrapperIos: ObservableObject {
         }
     }
 
-    func search(query: String) {
-        vm.loadMovieList(query: query)
+    func loadMovie(id: String) {
+        vm.loadMovie(id: id)
     }
 
     deinit {
-        vm.movieListState.removeAllObservers()
+        vm.movieState.removeAllObservers()
         vm.isLoading.removeAllObservers()
         vm.error.removeAllObservers()
     }

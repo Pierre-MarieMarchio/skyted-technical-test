@@ -12,7 +12,9 @@ struct ComposeView: UIViewControllerRepresentable {
 
 struct ContentView: View {
     var body: some View {
-        MovieListView(movieListVM: DependencyContainer.shared.movieListVM)
+        MovieListView(movieListVM: DependencyContainer.shared.movieListVM, createMovieDetailsVM: {
+            DependencyContainer.shared.movieDetailsVM
+        })
             .ignoresSafeArea()
     }
 }
