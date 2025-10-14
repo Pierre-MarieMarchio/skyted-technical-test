@@ -4,5 +4,6 @@ sealed class Screen {
 
     data class MovieList(val initialQuery: String = "") : Screen()
     data class MovieDetails(val movieId: String) : Screen()
+    object HomeScreen : Screen()
 
 }

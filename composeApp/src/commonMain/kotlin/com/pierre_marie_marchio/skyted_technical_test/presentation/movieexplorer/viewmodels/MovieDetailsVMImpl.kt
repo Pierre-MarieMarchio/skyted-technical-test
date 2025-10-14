@@ -6,7 +6,11 @@ import com.pierre_marie_marchio.skyted_technical_test.presentation.movieexplorer
 import kotlinx.coroutines.*
 import kotlin.coroutines.cancellation.CancellationException
 
-class MovieDetailsVMImpl(private val getMovieByIdUseCase: suspend (String) -> MovieDetailDto?) : MovieDetailsVM {
+class MovieDetailsVMImpl(
+    private val getMovieByIdUseCase: suspend (String) -> MovieDetailDto?,
+    private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+) : MovieDetailsVM {
 
     override val movieState = Observable<MovieDetailDto?>(null)
     override val isLoading = Observable(false)
@@ -15,17 +19,12 @@ class MovieDetailsVMImpl(private val getMovieByIdUseCase: suspend (String) -> Mo
     private var loadJob: Job? = null
 
     override fun loadMovie(id: String) {
-
         loadJob?.cancel()
-
-
-        loadJob = CoroutineScope(Dispatchers.Main).launch {
+        loadJob = CoroutineScope(mainDispatcher).launch {
             isLoading.value = true
             error.value = null
             try {
-                val movie = withContext(Dispatchers.IO) {
-                    getMovieByIdUseCase(id)
-                }
+                val movie = withContext(ioDispatcher) { getMovieByIdUseCase(id) }
                 movieState.value = movie
             } catch (e: Exception) {
                 if (e !is CancellationException) {

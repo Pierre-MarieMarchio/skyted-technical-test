@@ -2,8 +2,6 @@ package com.pierre_marie_marchio.skyted_technical_test.presentation.movieexplore
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -14,11 +12,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ImagePlaceholder() {
+fun ImagePlaceholder(modifier: Modifier = Modifier) {
     Box(
-        modifier = Modifier
-            .height(300.dp)
-            .fillMaxWidth()
+        modifier = modifier
             .clip(RoundedCornerShape(12.dp))
             .background(MaterialTheme.colorScheme.surfaceVariant),
         contentAlignment = Alignment.Center

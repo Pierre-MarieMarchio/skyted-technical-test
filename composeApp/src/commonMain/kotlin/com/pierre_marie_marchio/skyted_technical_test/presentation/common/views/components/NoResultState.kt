@@ -10,9 +10,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
-
 @Composable
-fun EmptyState() {
+fun NoResultsState() {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -24,7 +23,7 @@ fun EmptyState() {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(
-                text = "Start by searching for a movie 🎬",
+                text = "No movies found 😢",
                 style = MaterialTheme.typography.bodyLarge.copy(
                     color = MaterialTheme.colorScheme.onBackground,
                     fontWeight = FontWeight.Medium
@@ -33,7 +32,7 @@ fun EmptyState() {
             )
 
             Text(
-                text = "Use the search bar above to find your favorite movies.",
+                text = "Try adjusting your search query.",
                 style = MaterialTheme.typography.bodyMedium.copy(
                     color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
                 ),

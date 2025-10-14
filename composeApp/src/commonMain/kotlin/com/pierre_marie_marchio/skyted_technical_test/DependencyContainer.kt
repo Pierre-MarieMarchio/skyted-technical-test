@@ -11,7 +11,6 @@ import com.pierre_marie_marchio.skyted_technical_test.presentation.movieexplorer
 import com.pierre_marie_marchio.skyted_technical_test.presentation.movieexplorer.viewmodels.MovieListVMImpl
 
 object DependencyContainer {
-
     private const val API_KEY = AppEnvironment.API_KEY
 
     private val movieRepository: MovieRepository by lazy {
