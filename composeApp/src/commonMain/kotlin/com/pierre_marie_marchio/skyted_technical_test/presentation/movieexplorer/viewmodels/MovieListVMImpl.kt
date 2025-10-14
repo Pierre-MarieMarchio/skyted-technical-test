@@ -6,23 +6,27 @@ import com.pierre_marie_marchio.skyted_technical_test.presentation.movieexplorer
 import kotlinx.coroutines.*
 import kotlin.coroutines.cancellation.CancellationException
 
-class MovieListVMImpl(private val searchMovieUseCase: suspend (String) -> List<MovieListItemDto>?) : MovieListVM {
+class MovieListVMImpl(
+    private val searchMovieUseCase: suspend (String) -> List<MovieListItemDto>?,
+    private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+) : MovieListVM {
+
     override val movieListState = Observable<List<MovieListItemDto>?>(null)
     override val isLoading = Observable(false)
     override val error = Observable<String?>(null)
     override val searchQuery = Observable("")
-
 
     private var loadJob: Job? = null
 
     override fun loadMovieList(query: String) {
         loadJob?.cancel()
 
-        loadJob = CoroutineScope(Dispatchers.Main).launch {
+        loadJob = CoroutineScope(mainDispatcher).launch {
             isLoading.value = true
             error.value = null
             try {
-                val movies = withContext(Dispatchers.IO) {
+                val movies = withContext(ioDispatcher) {
                     searchMovieUseCase(query)
                 }
                 movieListState.value = movies
@@ -39,5 +43,4 @@ class MovieListVMImpl(private val searchMovieUseCase: suspend (String) -> List<M
     override fun updateSearchQuery(query: String) {
         searchQuery.value = query
     }
-
 }

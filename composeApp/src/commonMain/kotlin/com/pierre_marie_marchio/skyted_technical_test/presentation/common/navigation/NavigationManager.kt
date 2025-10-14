@@ -4,8 +4,8 @@ import com.pierre_marie_marchio.skyted_technical_test.presentation.common.interf
 import com.pierre_marie_marchio.skyted_technical_test.presentation.common.services.Observable
 
 class NavigationManager : Navigator {
-    private val _navigationStack = mutableListOf<Screen>(Screen.MovieList())
-    val currentScreen = Observable<Screen>(Screen.MovieList())
+    private val _navigationStack = mutableListOf<Screen>(Screen.HomeScreen)
+    val currentScreen = Observable<Screen>(Screen.HomeScreen)
 
     override fun navigate(screen: Screen) {
         _navigationStack.add(screen)
