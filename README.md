@@ -34,9 +34,9 @@ pure and testable, while infrastructure and presentation details are kept at the
 
 | Layer              | Responsibility                                                   | Contains                                                 |
 |--------------------|------------------------------------------------------------------|----------------------------------------------------------|
-| **Domain**         | Core business logic, independent from frameworks                 | Entities, interfaces, and use cases                      |
-| **Application**    | Coordinates business logic and exposes use cases to presentation | DTOs, mappers, use case implementations                  |
-| **Infrastructure** | Handles data access and external communication                   | API clients, data sources, models                        |
+| **Domain**         | Core business logic, independent from frameworks                 | Entities, interfaces,  business logic                    |
+| **Application**    | Coordinates business logic and exposes use cases to presentation | DTOs, mappers, use case                                  |
+| **Infrastructure** | Handles data access and external communication                   | API clients, data sources, data-models, repositories     |
 | **Presentation**   | Manages UI state and navigation                                  | ViewModels, UI state models, and platform-specific views |
 
 ## Testing
