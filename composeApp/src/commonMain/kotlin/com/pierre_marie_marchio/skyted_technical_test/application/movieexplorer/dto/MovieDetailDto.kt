@@ -1,5 +1,8 @@
 package com.pierre_marie_marchio.skyted_technical_test.application.movieexplorer.dto
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class MovieDetailDto(
     val id: String,
     val title: String,

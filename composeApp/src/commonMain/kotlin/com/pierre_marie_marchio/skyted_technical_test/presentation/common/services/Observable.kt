@@ -8,11 +8,27 @@ class Observable<T>(initialValue: T) {
         get() = _value
         set(newValue) {
             _value = newValue
-            _observers.forEach { it(_value) }
+            val observersCopy = _observers.toList()
+            observersCopy.forEach { observer ->
+                try {
+                    observer(_value)
+                } catch (e: Exception) {
+                    println("Observable: Error notifying observer: ${e.message}")
+                }
+            }
         }
 
     fun observe(observer: (T) -> Unit) {
         _observers += observer
         observer(_value)
+    }
+
+    fun addObserver(observer: (T) -> Unit) {
+        _observers += observer
+        observer(_value)
+    }
+
+    fun removeAllObservers() {
+        _observers.clear()
     }
 }

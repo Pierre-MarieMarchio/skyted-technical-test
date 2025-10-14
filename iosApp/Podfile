@@ -1,4 +1,0 @@
-target 'ios-app' do
-   # ... other dependencies ...
-   pod 'CommonMain', :path => '../composeApp/CommonMain'
-end

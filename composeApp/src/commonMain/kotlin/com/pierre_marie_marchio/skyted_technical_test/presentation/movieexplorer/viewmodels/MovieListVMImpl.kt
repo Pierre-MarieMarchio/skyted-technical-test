@@ -15,7 +15,7 @@ class MovieListVMImpl(private val searchMovieUseCase: suspend (String) -> List<M
 
     private var loadJob: Job? = null
 
-    override fun loadMovieList(query: String) { // RETIRER suspend
+    override fun loadMovieList(query: String) {
         loadJob?.cancel()
 
         loadJob = CoroutineScope(Dispatchers.Main).launch {

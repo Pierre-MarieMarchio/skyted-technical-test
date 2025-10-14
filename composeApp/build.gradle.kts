@@ -1,13 +1,11 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
-import kotlin.collections.set
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.kotlinCocoapods)
+
 }
 
 kotlin {
@@ -15,20 +13,6 @@ kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
-    }
-
-    cocoapods {
-        version = "1.0"
-        summary = "Some description for a Kotlin/Native module"
-        name = "CommonMain"
-        homepage = "https://your-homepage.com"
-
-        framework {
-            baseName = "SharedKotlin"
-            isStatic = false
-        }
-        xcodeConfigurationToNativeBuildType["CUSTOM_DEBUG"] = NativeBuildType.DEBUG
-        xcodeConfigurationToNativeBuildType["CUSTOM_RELEASE"] = NativeBuildType.RELEASE
     }
 
     listOf(
