@@ -10,7 +10,7 @@ import kotlin.coroutines.resumeWithException
 actual class MovieExplorerApiClient actual constructor(private val apiKey: String) : ApiClient {
     @OptIn(BetaInteropApi::class)
     actual override suspend fun get(url: String): String = suspendCancellableCoroutine { cont ->
-        val nsUrl = NSURL(string = url)!!
+        val nsUrl = NSURL(string = "$url&apikey=$apiKey")
         val request = NSURLRequest.requestWithURL(nsUrl)
         val task = NSURLSession.sharedSession.dataTaskWithRequest(request) { data, _, error ->
             if (error != null) {

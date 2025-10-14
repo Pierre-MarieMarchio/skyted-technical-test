@@ -1,10 +1,13 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
+import kotlin.collections.set
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinCocoapods)
 }
 
 kotlin {
@@ -14,20 +17,27 @@ kotlin {
         }
     }
 
+    cocoapods {
+        version = "1.0"
+        summary = "Some description for a Kotlin/Native module"
+        name = "CommonMain"
+        homepage = "https://your-homepage.com"
+
+        framework {
+            baseName = "SharedKotlin"
+            isStatic = false
+        }
+        xcodeConfigurationToNativeBuildType["CUSTOM_DEBUG"] = NativeBuildType.DEBUG
+        xcodeConfigurationToNativeBuildType["CUSTOM_RELEASE"] = NativeBuildType.RELEASE
+    }
+
     listOf(
         iosArm64(),
         iosSimulatorArm64()
     ).forEach { iosTarget ->
-        iosTarget.apply {
-            binaries.framework {
-                baseName = "ComposeApp"
-                isStatic = true
-            }
-            compilerOptions {
-                freeCompilerArgs.addAll(
-                    listOf("-Xbinary=-ios_version_min=12.0")
-                )
-            }
+        iosTarget.binaries.framework {
+            baseName = "ComposeApp"
+            isStatic = true
         }
     }
 
